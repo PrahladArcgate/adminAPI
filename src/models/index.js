@@ -2,6 +2,50 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 
+// const User = require('./User');
+// const Admin = require('./Admin');
+
+// Admin.belongsTo(User, {foreignKey: 'user', as: 'User'});
+
+// // Define what associations you need.
+
+// module.exports = {
+//     User,
+//     Admin,
+// };
+
+//  const user=require('./User');
+// const Admin=require('./Admin');
+// const User = require('./User');
+
+
+
+// User.hasMany(user,{
+//     foreignKey:'user_id',
+//     sourceKey:'id'
+
+
+// });
+// User.belongsTo(user,{
+//     foreignKey:'user_id',
+//     targetkey:'id'
+// })
+
+
+
+//  examCategory.ExamCategory.hasMany(exam.Exam, {
+//     foreignKey: 'exam_id',
+//     sourceKey: 'id'
+// });
+// exam.Exam.belongsTo( examCategory.ExamCategory, {
+//     foreignKey: 'exam_id',
+//     targetKey: 'id'
+// });
+// sequelize.sync();
+// sequelize.sync({ force: true });
+
+
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 // eslint-disable-next-line import/no-dynamic-require
@@ -32,6 +76,6 @@ Object.keys(db).forEach((modelName) => {
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// db.Sequelize = Sequelize;
 
 module.exports = db;

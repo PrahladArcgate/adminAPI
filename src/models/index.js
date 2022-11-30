@@ -66,7 +66,12 @@ fs.readdirSync(__dirname)
     .forEach((file) => {
         // eslint-disable-next-line global-require,import/no-dynamic-require
         const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-        db[model.name] = model;
+        try{
+            db[model.name] = model
+            console.log("working")
+            }catch(err){
+            console.error("+++++")
+            }         
     });
 
 Object.keys(db).forEach((modelName) => {

@@ -1,27 +1,26 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Permission_map extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-            //  Permission_map.belongsTo(models.Permission,{foreginKey:'Permission_id',targetKey:'id'});
-            //  Permission_map.belongsTo(models.admin,{foreginKey:'admin_id',targetKey:'id'});
-          
-        }
+    sequelize.define(
+    "permissions_admin_map",
+    {
+      id: {
+        type: DataTypes.INTEGER(),
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      permit_fk: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
+      admin_fk: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      }
+    },
+    {
+      tableName: "permissions_admin_map",
+      timestamps: true
     }
-    Permission_map.init(
-        {
-            uuid: DataTypes.UUID,
-           
-        },
-        {
-            sequelize,
-            modelName: 'permission_map',
-            underscored: true,
-        },
-    );
-    return Permission_map;
-};
+  );
+}

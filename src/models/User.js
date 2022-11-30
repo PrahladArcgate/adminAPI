@@ -1,33 +1,50 @@
+'use strict';
 const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-    class User extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
+module.exports = (sequelize, DataTypes) =>{
+  const User = sequelize.define(
+    "user",
+    {
+      id: {
+        type: DataTypes.INTEGER(),
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      fullName: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        validate: {
+          isEmail: true
+        },
+        unique: true
+      },
+      password: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
 
-            // UUID.belongsTo(User);
-            //  Admin.belongsTo(models.User,{foreginKey:'Users_id',targetKey:'id'});
-            // define association here
-          // User.belongsTo(models.agency, { foreignKey: 'agency_id', targetKey: 'id' });
-        }
-    }
-    User.init(
-        {  
-            uuid: DataTypes.UUID,
-            full_name: DataTypes.STRING,
-            email: DataTypes.STRING,
-            password: DataTypes.STRING,
-            is_admin: DataTypes.BOOLEAN,
-           
-        },
-        {
-            sequelize,
-            modelName: 'user',
-            underscored: true,
-        },
-    );
+      is_admin: {
+        type: DataTypes.BOOLEAN(),
+        allowNull: false
+      }
+    },
+    {
+      tableName: "user",
+      timestamps: true,
+      paranoid: true
+    });
+
+    User.associate = (models) => {
+      User.hasMany(models.admin,{
+        foreignKey: "id"
+      })
+    };
+
+
+    
     return User;
-};
+  };

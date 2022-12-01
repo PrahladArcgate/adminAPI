@@ -1,6 +1,7 @@
+'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    sequelize.define(
+    const Permission = sequelize.define(
     "permission",
     {
       id: {
@@ -16,7 +17,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       tableName: "permission",
-      timestamps: true
+      timestamps: true,
+      paranoid: true
     }
   );
-}
+
+  Permission.associate = (models) => {
+    Permission.hasMany(models.permissions_admin_map,{
+      foreignKey: "permitId"
+    })
+  };
+
+
+  return Permission;
+} 

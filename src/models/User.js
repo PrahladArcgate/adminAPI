@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) =>{
       },
 
       is_admin: {
-        type: DataTypes.BOOLEAN(),
+        type: DataTypes.TINYINT(),
         allowNull: false
       }
     },
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) =>{
 
     User.associate = (models) => {
       User.hasMany(models.admin,{
-        foreignKey: "id"
+        foreignKey: "userId"
       })
     };
 

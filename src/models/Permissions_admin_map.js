@@ -1,6 +1,7 @@
+'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    sequelize.define(
+    const Permissions_admin_map = sequelize.define(
     "permissions_admin_map",
     {
       id: {
@@ -10,17 +11,33 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       permit_fk: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER(255),
         allowNull: false
       },
       admin_fk: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER(255),
         allowNull: false
       }
     },
     {
       tableName: "permissions_admin_map",
-      timestamps: true
+      timestamps: true,
+      paranoid: true
     }
   );
-}
+
+  Permissions_admin_map.associate = (models) => {
+    Permissions_admin_map.belongsTo(models.admin,{
+      foreignKey: "adminId"
+    })
+  };
+
+  Permissions_admin_map.associate = (models) => {
+    Permissions_admin_map.belongsTo(models.permission,{
+      foreignKey: "permitId"
+    })
+  };
+
+
+  return Permissions_admin_map;
+} 

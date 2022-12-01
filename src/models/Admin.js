@@ -4,9 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   const Admin = sequelize.define(
     "admin",
     {
-      id_new: {
-        type: DataTypes.INTEGER()
-      },
       user_id: {
         type: DataTypes.INTEGER(),
         allowNull: false,
@@ -14,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       role_id: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER(),
         allowNull: false
       }
     },
@@ -26,11 +23,22 @@ module.exports = (sequelize, DataTypes) => {
 
     Admin.associate = (models) => {
       Admin.belongsTo(models.user,{
-        foreignKey: "user_id"
+        foreignKey: "userId"
       })
     };
 
+    Admin.associate = (models) => {
+      Admin.belongsTo(models.role,{
+        foreignKey: "roleId"
+      })
+    };
 
+    Admin.associate = (models) => {
+      Admin.hasMany(models.permissions_admin_map,{
+        foreignKey: "adminId"
+      })
+    };
 
+ 
   return Admin;
 };

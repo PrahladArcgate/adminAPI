@@ -1,6 +1,7 @@
+'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    sequelize.define(
+    const Role = sequelize.define(
       "role",
       {
         id: {
@@ -10,13 +11,23 @@ module.exports = (sequelize, DataTypes) => {
           autoIncrement: true
         },
         role_name: {
-          type: DataTypes.INTEGER(),
+          type: DataTypes.STRING(255),
           allowNull: false
         }
       },
       {
         tableName: "role",
-        timestamps: true
-      }
-    );
+        timestamps: true,
+        paranoid: true
+      });
+
+      Role.associate = (models) => {
+        Role.hasMany(models.admin,{
+          foreignKey: "roleId"
+        })
+      };
+      
+
+
+      return Role;
 }
